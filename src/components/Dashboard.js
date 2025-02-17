@@ -62,7 +62,7 @@ const Dashboard = () => {
   };
 
   const handleGenerateSummary = async (documentId) => {
-    console.log("Document ID:", documentId); // Log the documentId
+    // console.log("Document ID:", documentId); // Log the documentId
     setLoadingStates((prev) => ({ ...prev, [documentId]: true }));
     try {
       const token = localStorage.getItem("token");

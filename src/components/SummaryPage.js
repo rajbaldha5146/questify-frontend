@@ -14,8 +14,8 @@ const SummaryPage = () => {
   const [qaHistory, setQaHistory] = useState([]);
 
   // Log the documentId and location.state
-  console.log("Document ID from location.state:", documentId);
-  console.log("Location State:", location.state);
+  // console.log("Document ID from location.state:", documentId);
+  // console.log("Location State:", location.state);
 
   // Fetch Q&A history on component mount
   useEffect(() => {

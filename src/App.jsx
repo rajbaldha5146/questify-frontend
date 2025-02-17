@@ -9,7 +9,7 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
 import SummaryPage from "./components/SummaryPage"; // Import the new component
-import Footer from "./components/Footer";
+// import Footer from "./components/Footer";
 
 const App = () => {
   return (
@@ -45,7 +45,7 @@ const App = () => {
           {/* Redirect to Home if no route matches */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
         <ToastContainer />
       </Router>
     </AuthProvider>
