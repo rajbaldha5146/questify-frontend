@@ -19,7 +19,7 @@ const Login = () => {
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
-    setErrors({ ...errors, [e.target.name]: "" }); // Clear error on input change
+    setErrors({ ...errors, [e.target.name]: "" });
   };
 
   const handleSubmit = async (e) => {
@@ -30,7 +30,7 @@ const Login = () => {
       toast.success("Login successful! Redirecting...");
       setTimeout(() => {
         navigate("/dashboard");
-      }, 2000); // Redirect after 2 seconds
+      }, 2000);
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setErrors({
@@ -45,45 +45,80 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#1A1B1F] flex items-center justify-center">
-      <form onSubmit={handleSubmit} className="bg-[#1F2128] p-8 rounded-xl shadow-lg w-96">
-        <h2 className="text-3xl font-bold text-white mb-8">Login</h2>
-        <div className="mb-6">
-          <label className="block text-sm font-medium text-[#8A8F98] mb-2">Email</label>
-          <input
-            type="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className={`w-full p-3 bg-[#2A2C34] border ${
-              errors.email ? "border-red-500" : "border-[#3A3D45]"
-            } rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#6C5CFF]`}
-            required
-          />
-          {errors.email && (
-            <p className="text-red-500 text-sm mt-2">{errors.email}</p>
-          )}
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center py-12 px-4">
+      <div className="max-w-md w-full">
+        <div className="bg-white rounded-lg shadow-lg p-8">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold text-gray-900">Welcome Back</h2>
+            <p className="text-gray-600 mt-2">Sign in to your Questify account</p>
+          </div>
+          
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Email Address
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
+                  errors.email 
+                    ? "border-red-300 focus:ring-red-500" 
+                    : "border-gray-300 focus:ring-emerald-500 focus:border-emerald-500"
+                }`}
+                placeholder="Enter your email"
+                required
+              />
+              {errors.email && (
+                <p className="text-red-600 text-sm mt-1">{errors.email}</p>
+              )}
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Password
+              </label>
+              <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
+                  errors.password 
+                    ? "border-red-300 focus:ring-red-500" 
+                    : "border-gray-300 focus:ring-emerald-500 focus:border-emerald-500"
+                }`}
+                placeholder="Enter your password"
+                required
+              />
+              {errors.password && (
+                <p className="text-red-600 text-sm mt-1">{errors.password}</p>
+              )}
+            </div>
+            
+            <button 
+              type="submit" 
+              className="w-full bg-emerald-600 text-white py-3 rounded-lg font-semibold hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-colors duration-200"
+            >
+              Sign In
+            </button>
+          </form>
+          
+          <div className="mt-6 text-center">
+            <p className="text-gray-600">
+              Don't have an account?{" "}
+              <button 
+                onClick={() => navigate("/signup")}
+                className="text-emerald-600 hover:text-emerald-700 font-medium"
+              >
+                Sign up here
+              </button>
+            </p>
+          </div>
         </div>
-        <div className="mb-8">
-          <label className="block text-sm font-medium text-[#8A8F98] mb-2">Password</label>
-          <input
-            type="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            className={`w-full p-3 bg-[#2A2C34] border ${
-              errors.password ? "border-red-500" : "border-[#3A3D45]"
-            } rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#6C5CFF]`}
-            required
-          />
-          {errors.password && (
-            <p className="text-red-500 text-sm mt-2">{errors.password}</p>
-          )}
-        </div>
-        <button type="submit" className="w-full bg-[#6C5CFF] text-white p-3 rounded-lg hover:bg-[#5A4AE0] transition-colors duration-300">
-          Login
-        </button>
-      </form>
+      </div>
     </div>
   );
 };

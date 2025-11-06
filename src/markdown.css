@@ -1,0 +1,45 @@
+/* Custom markdown styles for better table rendering */
+.markdown-content table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.markdown-content table th,
+.markdown-content table td {
+  border: 1px solid #3A3D45;
+  padding: 0.75rem 1rem;
+  text-align: left;
+}
+
+.markdown-content table th {
+  background-color: #2A2C34;
+  color: white;
+  font-weight: 600;
+}
+
+.markdown-content table td {
+  background-color: #1F2128;
+  color: #8A8F98;
+}
+
+.markdown-content table tr:hover td {
+  background-color: #2A2C34;
+}
+
+/* Responsive table wrapper */
+.table-wrapper {
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+/* Better list styling */
+.markdown-content ul,
+.markdown-content ol {
+  margin-left: 1rem;
+}
+
+.markdown-content li {
+  margin-bottom: 0.25rem;
+}
