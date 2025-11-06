@@ -10,6 +10,7 @@ const Signup = () => {
     email: "",
     password: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -18,16 +19,34 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    
     try {
-      const response = await axios.post(`${backend_url}/api/auth/signup`, formData);
+      const response = await axios.post(`${backend_url}/api/auth/signup`, formData, {
+        timeout: 10000, // 10 second timeout
+      });
       localStorage.setItem("token", response.data.token);
       toast.success("Account created successfully! Redirecting...");
       setTimeout(() => {
         navigate("/");
       }, 2000);
     } catch (error) {
-      toast.error("Signup failed. Please try again.");
-      console.error(error);
+      if (error.code === 'ERR_NETWORK' || error.message === 'Network Error') {
+        toast.error("Unable to connect to server. Please check your internet connection or try again later.");
+      } else if (error.code === 'ECONNABORTED') {
+        toast.error("Request timed out. Please try again.");
+      } else if (error.response && error.response.status === 400) {
+        toast.error("Invalid signup data. Please check your information.");
+      } else if (error.response && error.response.status === 409) {
+        toast.error("Email already exists. Please use a different email.");
+      } else if (error.response && error.response.status >= 500) {
+        toast.error("Server error. Please try again later.");
+      } else {
+        toast.error("Signup failed. Please try again.");
+      }
+      console.error('Signup error:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -91,9 +110,21 @@ const Signup = () => {
             
             <button 
               type="submit" 
-              className="w-full bg-emerald-600 text-white py-3 rounded-lg font-semibold hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-colors duration-200"
+              disabled={isLoading}
+              className={`w-full py-3 rounded-lg font-semibold focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 transition-colors duration-200 ${
+                isLoading 
+                  ? "bg-gray-400 cursor-not-allowed" 
+                  : "bg-emerald-600 text-white hover:bg-emerald-700"
+              }`}
             >
-              Create Account
+              {isLoading ? (
+                <div className="flex items-center justify-center">
+                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                  Creating Account...
+                </div>
+              ) : (
+                "Create Account"
+              )}
             </button>
           </form>
           
